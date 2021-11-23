@@ -22,13 +22,21 @@ class coches {
     }
 
     frenar() {
-        this.vel = this.vel - this.acc;
-        this.vel <= 0 ? this.vel = 0 : this.vel;
-        this.dr = this.dr + this.vel;
+        if(this.vel >= 20){
+            this.vel = this.vel - this.deacc;
+            this.dr = this.dr + this.vel;
+            this.combustion();
+        }else{
+            this.acelerar()
+        }
+    }
+
+    combustion(){
+        this.gas-=this.vel/100
     }
 
     repostar(){
-        this.gas+=15
+        this.gas+=70
         this.gas>this.tank ? this.gas=this.tank : this.gas;
     }
 

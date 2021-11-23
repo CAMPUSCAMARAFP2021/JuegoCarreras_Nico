@@ -1,4 +1,4 @@
-class vias{
+class pistas {
     pista=[];
     distancia=0;
     constructor(nombre,vueltas,pista){

@@ -1,5 +1,5 @@
 class carrera{
-    vias = [new vias('sencillo',3,['recta','recta','curva','recta','recta','curva','recta','recta','curva','recta','recta','curva']),]
+    vias = [new pistas('sencillo',3,['recta','recta','curva','recta','recta','curva','recta','recta','curva','recta','recta','curva']),]
     coches =  [new mercedes(300,4,6,true),new honda(275,6,4,true)];
     resultados = [];
     instante = 0;
@@ -10,17 +10,22 @@ class carrera{
             this.instante++;
             console.log(this.resultados.length)
             this.coches.map((coche)=>{
-                if(coche.ingame==true){
-                    console.log(coche.jugabilidad)
-                    console.log(`${coche.name }->${coche.dr}; v:${coche.vel}`)
-                    if(coche.dr<this.vias.distancia ){
-                        this.juego(coche,this.vias.pista[parseInt(coche.dr/100)]);
-                    }else{
-                        coche.ingame=false;
-                        this.resultados.push({instante:this.instante,coche})
-                        if(this.resultados.length == this.coches.length){
-                            this.corriendo=false;
+                if(coche.ingame==true) {
+                    if (coche.gas >= 30) {
+
+                        console.log(coche.jugabilidad)
+                        console.log(`${coche.name}->${coche.dr}; v:${coche.vel}`)
+                        if (coche.dr < this.vias.distancia) {
+                            this.juego(coche, this.vias.pista[parseInt(coche.dr / 100)]);
+                        } else {
+                            coche.ingame = false;
+                            this.resultados.push({instante: this.instante, coche})
+                            if (this.resultados.length == this.coches.length) {
+                                this.corriendo = false;
+                            }
                         }
+                    }else{
+                        coche.repostar();
                     }
                 }
 
