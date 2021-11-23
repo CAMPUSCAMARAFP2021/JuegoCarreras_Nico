@@ -1,48 +1,35 @@
-class Car {
-    speed;
-    speedMax;
+class coches {
+    vmax;
     acc;
-    distance;
-
-    constructor(speedMax, acc) {
-        this.speedMax = speedMax;
+    vel = 0;
+    dr = 0;
+    deacc;
+    gas=0;
+    constructor(vmax, acc, deacc, ingame, tank) {
+        this.vmax = vmax;
         this.acc = acc;
-        this.speed = 0;
-        this.distance = 0;
+        this.deacc = deacc
+        this.ingame = ingame;
+        this.tank = tank;
+        this.gas = tank;
     }
-    accelerate() {
-        this.speed = this.speed + this.acc;
-        if(this.speedMax <= this.speed) { this.speed = this.speedMax}
-        this.distance = this.distance + this.speed;
+
+    acelerar() {
+        this.vel = this.vel + this.acc;
+        this.vel >= this.vmax ? this.vel = this.vmax : this.vel;
+        this.dr = this.dr + this.vel;
+        this.gas = this.vel/100
     }
+
+    frenar() {
+        this.vel = this.vel - this.acc;
+        this.vel <= 0 ? this.vel = 0 : this.vel;
+        this.dr = this.dr + this.vel;
+    }
+
+    repostar(){
+        this.gas+=15
+        this.gas>this.tank ? this.gas=this.tank : this.gas;
+    }
+
 }
-
-class Race {
-    distance;
-    instant;
-    cars = [new Car(200,5), new Car(220,4)];
-    results = [];
-
-    constructor(distance) {
-        this.distance = distance;
-    }
-    start(){
-        let timer = setInterval(() => {
-            if( this.results.length === this.cars.length ) clearInterval(timer);
-        }, 1000);
-
-        while(this.results.length === this.cars.length) {
-            this.instant++;
-            this.cars.map((car) => {
-                car.accelerate();
-                if(car.distance >= this.distance) {
-                    this.results.push({instant:this.instant, car});
-                }
-            })
-        }
-    }
-}
-
-race = new Race(200);
-race.start();
-console.log(race.results);

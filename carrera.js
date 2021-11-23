@@ -1,22 +1,41 @@
-class carrera {
-
-    coches =  [new Coche(200,4), new Coche(230, 3)];
+class carrera{
+    vias = [new vias('sencillo',3,['recta','recta','curva','recta','recta','curva','recta','recta','curva','recta','recta','curva']),]
+    coches =  [new mercedes(300,4,6,true),new honda(275,6,4,true)];
     resultados = [];
-    distancia = 100;
     instante = 0;
+    corriendo=true;
 
-    constructor(distance){
-        this.distancia=distance;
-    }
     start(){
-        while (this.coches.length=== this.resultados.length) {
+        while (this.corriendo) {
             this.instante++;
-            this.coche.map((coche)=>{
-                coche.acelerar();
-                coche.dr < this.distancia || this.resultados.push({instante:this.instante,coche})
+            console.log(this.resultados.length)
+            this.coches.map((coche)=>{
+                if(coche.ingame==true){
+                    console.log(coche.jugabilidad)
+                    console.log(`${coche.name }->${coche.dr}; v:${coche.vel}`)
+                    if(coche.dr<this.vias.distancia ){
+                        this.juego(coche,this.vias.pista[parseInt(coche.dr/100)]);
+                    }else{
+                        coche.ingame=false;
+                        this.resultados.push({instante:this.instante,coche})
+                        if(this.resultados.length == this.coches.length){
+                            this.corriendo=false;
+                        }
+                    }
+                }
+
             })
-
         }
-
+        console.log(this.resultados)
+    }
+    juego(coche,posicion) {
+        switch(posicion) {
+            case 'recta':
+                coche.acelerar();
+                break;
+            case 'curva':
+                coche.frenar();
+                break;
+        }
     }
 }
